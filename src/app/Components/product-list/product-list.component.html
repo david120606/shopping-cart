@@ -1,5 +1,5 @@
 <div class="product-container">
-    <mat-card *ngFor="let product of products" class="product-card">
+    <mat-card *ngFor="let product of paginatedProducts" class="product-card">
         <mat-card-header>
             <mat-card-title>{{ product.title }}</mat-card-title>
         </mat-card-header>
@@ -15,3 +15,8 @@
         </mat-card-actions>
     </mat-card>
 </div>
+<mat-paginator [length]="length"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[6, 12, 24, 48]"
+               (page)="onPageChange($event)">
+</mat-paginator>

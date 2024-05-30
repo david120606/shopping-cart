@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Product } from 'src/app/Interfaces/product.interface';
 import { CartService } from 'src/app/Services/cart/cart.service';
 import { ProductService } from 'src/app/Services/product/product.service';
@@ -11,20 +12,38 @@ import { ProductService } from 'src/app/Services/product/product.service';
 export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
-
+  paginatedProducts: Product[] = [];
+  pageSize = 6;
+  pageIndex = 0;
+  length = 0;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   constructor(readonly productService: ProductService, readonly cartService: CartService) { }
 
   async ngOnInit() {
     this.products = await this.productService.getProducts();
+    this.length = this.products.length;
+    this.paginateProducts();
   }
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
+
+  }
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.pageIndex = event.pageIndex;
+    this.paginateProducts();
+  }
+
+  paginateProducts(): void {
+    const startIndex = this.pageIndex * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedProducts = this.products.slice(startIndex, endIndex);
   }
   getTruncatedDescription(description: string): string {
     if (description.length > 100) {
-        return description.substring(0, 100) + '...';
+      return description.substring(0, 100) + '...';
     }
     return description;
-}
+  }
 }

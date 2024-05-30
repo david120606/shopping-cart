@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatListModule,
     MatToolbarModule,
     MatBadgeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatListModule,
     MatToolbarModule,
     MatBadgeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatPaginatorModule
   ]
 })
 export class SharedModule { }
