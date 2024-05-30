@@ -26,7 +26,6 @@ export class ShoppingCartComponent implements OnInit {
 
   removeFromCart(product: Product) {
     this.cartService.removeFromCart(product);
-    console.log('Product removed from cart:', product);
   }
   private calculateTotal(): void {
     this.total = this.cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);

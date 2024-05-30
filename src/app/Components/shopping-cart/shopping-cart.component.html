@@ -1,4 +1,5 @@
 <mat-list class="shopping-cart-container" [class.visible]="isVisible">
+    <p>Shopping</p>
     <div class="cart-items">
         <mat-list-item *ngFor="let cartItem of cart">
             <h3 mat-line>{{ cartItem.product.title }}</h3>
