@@ -1,0 +1,15 @@
+<mat-list class="shopping-cart-container" [class.visible]="isVisible">
+    <div class="cart-items">
+        <mat-list-item *ngFor="let cartItem of cart">
+            <h3 mat-line>{{ cartItem.product.title }}</h3>
+            <p mat-line>{{ cartItem.quantity }}</p>
+            <p mat-line>{{ (cartItem.product.price * cartItem.quantity)| currency }}</p>
+            <button mat-icon-button color="warn" (click)="removeFromCart(cartItem.product)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-list-item>
+    </div>
+    <div class="cart-total">
+        <h3>Total: {{ total | currency }}</h3>
+    </div>
+</mat-list>
