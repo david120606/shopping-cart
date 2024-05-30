@@ -1,3 +1,11 @@
+<div class="product-filter">
+    <mat-form-field appearance="outline">
+        <mat-label>Search Products</mat-label>
+        <input matInput placeholder="Enter product name"  [(ngModel)]="searchText" (input)="filterProducts()">
+    </mat-form-field>
+</div>
+
+
 <div class="product-container">
     <mat-card *ngFor="let product of paginatedProducts" class="product-card">
         <mat-card-header>
@@ -7,7 +15,8 @@
             <img [src]="product.image" alt="{{ product.title }}">
         </div>
         <mat-card-content>
-            <p [matTooltip]="product.description" matTooltipPosition="above">{{ getTruncatedDescription(product.description) }}</p>
+            <p [matTooltip]="product.description" matTooltipPosition="above">{{
+                getTruncatedDescription(product.description) }}</p>
             <p><strong>{{ product.price | currency }}</strong></p>
         </mat-card-content>
         <mat-card-actions>
@@ -15,8 +24,7 @@
         </mat-card-actions>
     </mat-card>
 </div>
-<mat-paginator [length]="length"
-               [pageSize]="pageSize"
-               [pageSizeOptions]="[6, 12, 24, 48]"
-               (page)="onPageChange($event)">
+
+<mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 50]"
+    (page)="onPageChange($event)">
 </mat-paginator>

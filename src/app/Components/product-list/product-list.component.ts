@@ -13,15 +13,18 @@ export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
   paginatedProducts: Product[] = [];
+  filteredProducts: Product[] = [];
   pageSize = 6;
   pageIndex = 0;
   length = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  searchText: string = '';
   constructor(readonly productService: ProductService, readonly cartService: CartService) { }
 
   async ngOnInit() {
     this.products = await this.productService.getProducts();
-    this.length = this.products.length;
+    this.filteredProducts = this.products;
+    this.length = this.filteredProducts.length;
     this.paginateProducts();
   }
 
@@ -38,7 +41,16 @@ export class ProductListComponent implements OnInit {
   paginateProducts(): void {
     const startIndex = this.pageIndex * this.pageSize;
     const endIndex = startIndex + this.pageSize;
-    this.paginatedProducts = this.products.slice(startIndex, endIndex);
+    this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  filterProducts(): void {
+    this.filteredProducts = this.products.filter(product =>
+      product.title.toLowerCase().includes(this.searchText.toLowerCase())
+    );
+    this.length = this.filteredProducts.length;
+    this.pageIndex = 0;
+    this.paginateProducts();
   }
   getTruncatedDescription(description: string): string {
     if (description.length > 100) {
