@@ -8,9 +8,9 @@ import { CartItem, Product } from 'src/app/Interfaces/product.interface';
 export class CartService {
   private cartKey = 'shoppingCart';
   private cart = new BehaviorSubject<CartItem[]>(this.loadCart());
-  
+
   cart$ = this.cart.asObservable();
-  constructor(){
+  constructor() {
     localStorage.clear();
   }
 
@@ -29,13 +29,7 @@ export class CartService {
   }
 
   removeFromCart(product: Product) {
-    const currentCart = this.cart.value.map(item => {
-      if (item.product.id === product.id) {
-        return { ...item, quantity: item.quantity - 1 };
-      }
-      return item;
-    }).filter(item => item.quantity > 0);
-
+    const currentCart = this.cart.value.filter(item => item.product.id !== product.id);
     this.cart.next(currentCart);
     this.saveCart(currentCart);
   }
@@ -51,4 +45,10 @@ export class CartService {
   getTotalItems() {
     return this.cart.value.length;
   }
+
+  updateCart(cart: CartItem[]) {
+    this.cart.next(cart);
+    this.saveCart(cart);
+  }
+
 }

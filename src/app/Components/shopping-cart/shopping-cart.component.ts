@@ -12,9 +12,7 @@ export class ShoppingCartComponent implements OnInit {
   @Input() isVisible: boolean = false;
   cart: CartItem[] = [];
   total: number = 0;
-  constructor(private cartService: CartService) { 
-    
-    
+  constructor(private cartService: CartService) {
   }
 
   ngOnInit(): void {
@@ -27,7 +25,26 @@ export class ShoppingCartComponent implements OnInit {
   removeFromCart(product: Product) {
     this.cartService.removeFromCart(product);
   }
+
+  incrementQuantity(cartItem: CartItem): void {
+    cartItem.quantity += 1;
+    this.updateCart();
+  }
+
+  decrementQuantity(cartItem: CartItem): void {
+    if (cartItem.quantity > 1) {
+      cartItem.quantity -= 1;
+    } else {
+      this.removeFromCart(cartItem.product);
+    }
+    this.updateCart();
+  }
   private calculateTotal(): void {
     this.total = this.cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+  }
+
+  private updateCart(): void {
+    this.cartService.updateCart(this.cart);
+    this.calculateTotal();
   }
 }

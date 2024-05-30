@@ -3,7 +3,15 @@
     <div class="cart-items">
         <mat-list-item *ngFor="let cartItem of cart">
             <h3 mat-line>{{ cartItem.product.title }}</h3>
-            <p mat-line>{{ cartItem.quantity }}</p>
+            <div mat-line>
+                <button mat-icon-button (click)="decrementQuantity(cartItem)">
+                    <mat-icon>remove</mat-icon>
+                </button>
+                <span>{{ cartItem.quantity }}</span>
+                <button mat-icon-button (click)="incrementQuantity(cartItem)">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
             <p mat-line>{{ (cartItem.product.price * cartItem.quantity)| currency }}</p>
             <button mat-icon-button color="warn" (click)="removeFromCart(cartItem.product)">
                 <mat-icon>delete</mat-icon>
