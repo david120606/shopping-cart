@@ -19,6 +19,9 @@ export class ProductListComponent implements OnInit {
   pageSize = 6;
   pageIndex = 0;
   length = 0;
+  
+  categories: string[] = [];
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchText: string = '';
   constructor(readonly productService: ProductService,
@@ -27,6 +30,8 @@ export class ProductListComponent implements OnInit {
 
   async ngOnInit() {
     this.products = await this.productService.getProducts();
+    this.categories = await this.productService.getCategories();
+    console.log(this.categories);
     this.filteredProducts = this.products;
     this.length = this.filteredProducts.length;
     this.paginateProducts();
