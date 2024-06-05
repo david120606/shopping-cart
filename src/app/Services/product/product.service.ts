@@ -6,13 +6,22 @@ import { Product } from 'src/app/Interfaces/product.interface';
 })
 export class ProductService {
 
-  private apiUrl = 'https://fakestoreapi.com/products';
+  private apiProductsUrl = 'https://fakestoreapi.com/products';
+  private apiCategoriesUrl = 'https://fakestoreapi.com/products/categories';
 
   constructor() { }
 
   async getProducts(): Promise<Product[]> {
     try {
-      const response = await axios.get(this.apiUrl);
+      const response = await axios.get(this.apiProductsUrl);
+      return response.data
+    } catch {
+      return [];
+    }
+  }
+  async getCategories(): Promise<string[]> {
+    try {
+      const response = await axios.get(this.apiCategoriesUrl);
       return response.data
     } catch {
       return [];

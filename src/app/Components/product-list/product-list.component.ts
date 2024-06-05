@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Product } from 'src/app/Interfaces/product.interface';
 import { CartService } from 'src/app/Services/cart/cart.service';
 import { ProductService } from 'src/app/Services/product/product.service';
+import { ProductDetailComponent } from '../product-detail/product-detail.component';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +21,9 @@ export class ProductListComponent implements OnInit {
   length = 0;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   searchText: string = '';
-  constructor(readonly productService: ProductService, readonly cartService: CartService) { }
+  constructor(readonly productService: ProductService,
+    readonly cartService: CartService,
+    public dialog: MatDialog) { }
 
   async ngOnInit() {
     this.products = await this.productService.getProducts();
@@ -57,5 +61,11 @@ export class ProductListComponent implements OnInit {
       return description.substring(0, 100) + '...';
     }
     return description;
+  }
+
+  openProductDetail(product: Product) {
+    this.dialog.open(ProductDetailComponent, {
+      data: product
+    });
   }
 }

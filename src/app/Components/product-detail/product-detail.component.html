@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+<div mat-dialog-content>
+    <p>{{ data.description }}</p>
+    <p><strong>Price: </strong>{{ data.price | currency }}</p>
+    <p><strong>Category: </strong>{{ data.category }}</p>
+    <div *ngIf="this.cartItem.quantity > 0">
+        <button mat-button (click)="decrementQuantity()">-</button>
+        <span>{{this.cartItem.quantity}}</span>
+        <button mat-button (click)="incrementQuantity()">+</button>
+    </div>
+    <div *ngIf="this.cartItem.quantity === 0">
+        <button mat-button color="primary" (click)="addToCart()">Add to Cart</button>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>

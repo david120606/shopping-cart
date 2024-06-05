@@ -56,7 +56,16 @@ export class CartService {
   getTotalPrice(): number {
     return this.cart.value.reduce((total, item) => total + item.product.price * item.quantity, 0);
   }
-
+  existInCart(product: Product): CartItem {
+    const item = this.cart.value.find(item => item.product.id === product.id);
+    if (!item) {
+      return {
+        quantity: 0,
+        product
+      }
+    }
+    return item;
+  }
   private saveCart(cart: CartItem[]) {
     localStorage.setItem(this.cartKey, JSON.stringify(cart));
   }

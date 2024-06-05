@@ -7,12 +7,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductListComponent } from './Components/product-list/product-list.component';
 import { SharedModule } from './Modules/shared/shared.module';
 import { ShoppingCartComponent } from './Components/shopping-cart/shopping-cart.component';
+import { ProductDetailComponent } from './Components/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductListComponent,
-    ShoppingCartComponent
+    ShoppingCartComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,

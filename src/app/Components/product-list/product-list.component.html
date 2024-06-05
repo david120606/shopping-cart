@@ -1,7 +1,7 @@
 <div class="product-filter">
     <mat-form-field appearance="outline">
         <mat-label>Search Products</mat-label>
-        <input matInput placeholder="Enter product name"  [(ngModel)]="searchText" (input)="filterProducts()">
+        <input matInput placeholder="Enter product name" [(ngModel)]="searchText" (input)="filterProducts()">
     </mat-form-field>
 </div>
 
@@ -21,6 +21,7 @@
         </mat-card-content>
         <mat-card-actions>
             <button mat-button color="primary" (click)="addToCart(product)">Add to Cart</button>
+            <button mat-button color="primary" (click)="openProductDetail(product)">Detail</button>
         </mat-card-actions>
     </mat-card>
 </div>

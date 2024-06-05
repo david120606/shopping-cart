@@ -12,7 +12,7 @@ export class ShoppingCartComponent implements OnInit {
   @Input() isVisible: boolean = false;
   cart: CartItem[] = [];
   total: number = 0;
-  constructor(private cartService: CartService) {
+  constructor(readonly cartService: CartService) {
   }
 
   ngOnInit(): void {
