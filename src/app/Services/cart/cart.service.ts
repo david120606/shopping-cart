@@ -8,10 +8,8 @@ import { CartItem, Product } from 'src/app/Interfaces/product.interface';
 export class CartService {
   private cartKey = 'shoppingCart';
   private cart = new BehaviorSubject<CartItem[]>(this.loadCart());
-
   cart$ = this.cart.asObservable();
   constructor() {
-    localStorage.clear();
   }
 
   addToCart(product: Product) {
@@ -33,15 +31,20 @@ export class CartService {
     this.cart.next(currentCart);
     this.saveCart(currentCart);
   }
-
-  private saveCart(cart: CartItem[]) {
-    localStorage.setItem(this.cartKey, JSON.stringify(cart));
+  incrementQuantity(cartItem: CartItem): void {
+    cartItem.quantity += 1;
+    this.updateCart(this.cart.value);
   }
 
-  private loadCart(): CartItem[] {
-    const savedCart = localStorage.getItem(this.cartKey);
-    return savedCart ? JSON.parse(savedCart) : [];
+  decrementQuantity(cartItem: CartItem): void {
+    if (cartItem.quantity > 1) {
+      cartItem.quantity -= 1;
+    } else {
+      this.removeFromCart(cartItem.product);
+    }
+    this.updateCart(this.cart.value);
   }
+
   getTotalItems() {
     return this.cart.value.length;
   }
@@ -50,5 +53,21 @@ export class CartService {
     this.cart.next(cart);
     this.saveCart(cart);
   }
+  getTotalPrice(): number {
+    return this.cart.value.reduce((total, item) => total + item.product.price * item.quantity, 0);
+  }
 
+  private saveCart(cart: CartItem[]) {
+    localStorage.setItem(this.cartKey, JSON.stringify(cart));
+  }
+
+  private loadCart(): CartItem[] {
+    try {
+      const savedCart = localStorage.getItem(this.cartKey);
+      return savedCart ? JSON.parse(savedCart) : [];
+    } catch (error) {
+      console.error('Error loading cart', error);
+      return [];
+    }
+  }
 }

@@ -18,7 +18,7 @@ export class ShoppingCartComponent implements OnInit {
   ngOnInit(): void {
     this.cartService.cart$.subscribe(cart => {
       this.cart = cart;
-      this.calculateTotal()
+      this.total = this.cartService.getTotalPrice();
     });
   }
 
@@ -26,25 +26,11 @@ export class ShoppingCartComponent implements OnInit {
     this.cartService.removeFromCart(product);
   }
 
-  incrementQuantity(cartItem: CartItem): void {
-    cartItem.quantity += 1;
-    this.updateCart();
+  incrementQuantity(cartItem: CartItem) {
+    this.cartService.incrementQuantity(cartItem);
   }
 
-  decrementQuantity(cartItem: CartItem): void {
-    if (cartItem.quantity > 1) {
-      cartItem.quantity -= 1;
-    } else {
-      this.removeFromCart(cartItem.product);
-    }
-    this.updateCart();
-  }
-  private calculateTotal(): void {
-    this.total = this.cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-  }
-
-  private updateCart(): void {
-    this.cartService.updateCart(this.cart);
-    this.calculateTotal();
+  decrementQuantity(cartItem: CartItem) {
+    this.cartService.decrementQuantity(cartItem);
   }
 }
